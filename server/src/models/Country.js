@@ -18,12 +18,16 @@ module.exports = (sequelize) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    flags: {
-      type: DataTypes.STRING,
+    },    
+    flag: {
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     continent: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    capital: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -35,11 +39,11 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
     },
     area: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL,
     },
     population: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-  });
+  },{timestamps: false});
 };
