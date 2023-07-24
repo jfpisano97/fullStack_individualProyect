@@ -1,7 +1,7 @@
 const { Country } = require('../../db');
 const { Op } = require('sequelize');
 
-
+// handler
 const getCountryByNameHandler = async (name) => {
     const newName = name.charAt(0).toUpperCase() + name.slice(1);
     const success = await Country.findAll({
@@ -13,12 +13,14 @@ const getCountryByNameHandler = async (name) => {
     return success;
 };
 
+// handler
 const getAllCountriesHandler = async () => {
     const success = await Country.findAll();
     if (!success.length) throw new Error('Data Base is empty');
     return success;
 };
 
+// controller
 const getCountries = async (req, res) => {
     try {
         const { name } = req.query; 

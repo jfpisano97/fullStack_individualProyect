@@ -1,9 +1,9 @@
 const { Activity } = require('../../db');
 
+// handler
 const createActivityHandler = async (name, difficulty, duration, season, countries) => {
-
     if (!name || !difficulty || !duration || !season || !countries || !countries.length) throw new Error('Missing data');
-
+    
     const [act, created] = await Activity.findOrCreate({
         where: { name, difficulty, duration, season },
         defaults: { name, difficulty, duration, season },
@@ -15,6 +15,7 @@ const createActivityHandler = async (name, difficulty, duration, season, countri
     else throw new Error('Activity is already created');
 };
 
+// controller
 const postActivities = async (req, res) => {
     try {
         const {name, difficulty, duration, season, countries} = req.body;

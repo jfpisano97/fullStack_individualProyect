@@ -1,21 +1,24 @@
-// 📍 GET | /countries/:idPais
-// Esta ruta obtiene el detalle de un país específico. Es decir que devuelve un objeto con la información pedida en el detalle de un país. LISTO
-// El país es recibido por parámetro (ID de tres letras del país).LISTO
+const { Country, Activity } = require('../../db');
 
-// falta esto:
-// Tiene que incluir los datos de las actividades turísticas asociadas a este país.
-
-const { Country } = require('../../db');
-
+// handler
 const successHandler = async (req) => {
     const {id} = req.params;
     if (id.length !== 3) throw new Error('Invalid ID');
     const upperCaseID = id.toUpperCase();
-    const success = await Country.findByPk(upperCaseID);
+    const success = await Country.findByPk(upperCaseID, {
+        include: {
+            model: Activity, 
+            attributes: ["name"],
+            through: {
+                attributes: [],
+            },
+        },
+    });
     if (!success) throw new Error('Country not found');
     return success;
 };
 
+// controller
 const getCountriesByID = async (req, res) => {
     try {
         const country = await successHandler(req);

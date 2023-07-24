@@ -1,11 +1,13 @@
 const { Activity } = require('../../db');
 
+// handler
 const getAllActivitiesHandler = async () => {
     const success = await Activity.findAll();
     if (!success.length) throw new Error('Data Base is empty');
     return success;
 };
 
+// controller
 const getActivities = async (req, res) => {
     try { 
         const activities = await getAllActivitiesHandler();
