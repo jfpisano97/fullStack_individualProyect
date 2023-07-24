@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    dificultad: {
+    difficulty: {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
@@ -21,7 +21,7 @@ module.exports = (sequelize) => {
         },
     },
     duration: {
-        type: DataTypes.TIME,
+        type: DataTypes.STRING,
         allowNull: false,
     },
     season: {

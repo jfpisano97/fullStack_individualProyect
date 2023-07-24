@@ -9,13 +9,13 @@ const getCountryByNameHandler = async (name) => {
             name: {[Op.iLike]: `%${newName}%`}
         }
     })
-    if (success.length === 0) throw new Error('Country not found');
+    if (!success.length) throw new Error('Country not found');
     return success;
 };
 
 const getAllCountriesHandler = async () => {
     const success = await Country.findAll();
-    if (success.length === 0) throw new Error('Data Base is empty');
+    if (!success.length) throw new Error('Data Base is empty');
     return success;
 };
 
