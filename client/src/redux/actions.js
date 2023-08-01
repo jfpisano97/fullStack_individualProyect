@@ -9,7 +9,7 @@ export const ORDER = 'ORDER';
 
 
 export const GET_COUNTRIES = 'GET_COUNTRIES';
-
+export const GET_COUNTRIES_BY_ID = 'GET_COUNTRIES_BY_ID'
 
 
 
@@ -41,7 +41,25 @@ export const getCountries = () => {
                 type: GET_COUNTRIES,
                 payload: { error: true, errorMessage: "Error al cargar los países" },
             });
-        }
+        };
+    };
+};
+
+export const getCuntriesById = (id) => {
+    const newID = id.toUpperCase();
+    return async (dispatch) => {
+        try {
+            const country = await axios.get(`http://localhost:3001/countries/${newID}`);
+            dispatch({
+                type: GET_COUNTRIES_BY_ID,
+                payload: country.data,
+            });
+        } catch (error) {
+            dispatch({
+                type: GET_COUNTRIES_BY_ID,
+                payload: { error: true, errorMessage: "Error al cargar los países" },
+            });
+        };
     };
 };
 

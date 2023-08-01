@@ -1,11 +1,8 @@
-import { GET_COUNTRIES } from './actions';
-
-/// PROYECTO countries - copiar lo de rick y morty ////////////
-/////////////////////////////////////////////////////////
-
+import { GET_COUNTRIES, GET_COUNTRIES_BY_ID } from './actions';
 
 const initialState = {
     allCountries: [],
+    countryById: [],
     error: false,
     errorMessage: "",
 };
@@ -21,6 +18,16 @@ const rootReducer = (state = initialState, action) => {
                 };
             }
             return { ...state, allCountries: action.payload, error: false, errorMessage: "" };
+        case GET_COUNTRIES_BY_ID:
+            if (action.payload.error) {
+                return {
+                    ...state,
+                    error: true,
+                    errorMessage: action.payload.errorMessage,
+                };
+            }
+        return { ...state, countryById: action.payload, error: false, errorMessage: "" };
+
 
         default:
             return state;
