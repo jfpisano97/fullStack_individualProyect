@@ -1,4 +1,4 @@
-import { getCuntriesById } from '../../redux/actions.js';
+import { getCountriesById } from '../../redux/actions.js';
 import style from './detailPage.module.css'
 import {useParams} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,12 +14,17 @@ function detailPage() {
     const errorMessage = useSelector(state => state.errorMessage);
 
     useEffect(() => {
-        dispatch(getCuntriesById(id));
+        dispatch(getCountriesById(id));
     }, [id]);
     
     
     console.log('id', id)
     console.log('country', countryById)
+
+
+
+
+    // hacer un condicional para ver si existe el dispatch o no
     
     return (
         <div>
@@ -31,8 +36,6 @@ function detailPage() {
                 <h2>{countryById.area}</h2>
                 <h2>{countryById.population}</h2>
                 <h2>{countryById.Activities}</h2>
-                {/* {character.origin.name !== undefined && <h2>{character.origin.name}</h2>} */}
-                {/* <h2>{character.origin.name}</h2> */}
             </div>
             <div className={style.detail}>
                 <img src={countryById.flag} alt='' />

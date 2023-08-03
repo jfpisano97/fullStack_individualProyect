@@ -45,7 +45,7 @@ export const getCountries = () => {
     };
 };
 
-export const getCuntriesById = (id) => {
+export const getCountriesById = (id) => {
     const newID = id.toUpperCase();
     return async (dispatch) => {
         try {
