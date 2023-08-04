@@ -74,16 +74,19 @@ function homePage(props) {
     // with pagination
     // with error handler
     return (
-        <div className={style.cards}>
-            {error ? (
-                <h2>{errorMessage}</h2>
-            ) : currentCountries.length === 0 ? (
-                <h2>Loading...</h2>
-            ) : (
-                currentCountries.map(({ id, name, flag, continent }) => (
-                    <Card key={id} id={id} name={name} flag={flag} continent={continent} />
-                ))
-            )}
+        <>
+            
+            <div className={style.cards}>
+                {error ? (
+                    <h2>{errorMessage}</h2>
+                ) : currentCountries.length === 0 ? (
+                    <h2>Loading...</h2>
+                ) : (
+                    currentCountries.map(({ id, name, flag, continent }) => (
+                        <Card key={id} id={id} name={name} flag={flag} continent={continent} />
+                    ))
+                )}
+            </div> 
 
             <div>
                 <Pagination 
@@ -92,8 +95,7 @@ function homePage(props) {
                 pagination={pagination} 
                 page={currentPage} />
             </div>
-
-        </div> 
+        </>
     );
 };
 

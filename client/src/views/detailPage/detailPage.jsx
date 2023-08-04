@@ -17,29 +17,38 @@ function detailPage() {
         dispatch(getCountriesById(id));
     }, [id]);
     
-    
-    console.log('id', id)
-    console.log('country', countryById)
-
-
-
-
-    // hacer un condicional para ver si existe el dispatch o no
+    // console.log('id', id)
+    // console.log('country', countryById)
     
     return (
         <div>
-            <div className={style.detail}>
-                <h1>{countryById.name}</h1> 
-                <h2>{countryById.continent}</h2>
-                <h2>{countryById.capital}</h2>
-                <h2>{countryById.subregion}</h2>
-                <h2>{countryById.area}</h2>
-                <h2>{countryById.population}</h2>
-                <h2>{countryById.Activities}</h2>
-            </div>
-            <div className={style.detail}>
-                <img src={countryById.flag} alt='' />
-            </div>
+            {error ? (
+                <h2>{errorMessage}</h2>
+            ) : (
+            <>
+                <div className={style.detail}>
+                    <h1>{countryById.name}</h1> 
+                    <h2>{countryById.continent}</h2>
+                    <h2>{countryById.capital}</h2>
+                    <h2>{countryById.subregion}</h2>
+                    <h2>{countryById.area}</h2>
+                    <h2>{countryById.population}</h2>
+
+                    {countryById.Activities?.length ? (<ul>
+                        {countryById.Activities.map((activity) => (
+                            <li key={activity.name}>{activity.name}</li>
+                            ))}
+                        </ul>) : 
+                        <h2>There are no activities</h2>
+                    }
+                    
+
+                </div>
+                <div className={style.detail}>
+                    <img src={countryById.flag} alt='' />
+                </div>
+            </>
+            )}
         </div>
     );
 };

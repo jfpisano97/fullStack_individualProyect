@@ -1,4 +1,4 @@
-import { GET_COUNTRIES, GET_COUNTRIES_BY_ID } from './actions';
+import { GET_COUNTRIES, GET_COUNTRIES_BY_ID, ORDER_BY_NAME, ORDER_BY_POPULATION} from './actions';
 
 const initialState = {
     allCountries: [],
@@ -28,6 +28,30 @@ const rootReducer = (state = initialState, action) => {
             }
         return { ...state, countryById: action.payload, error: false, errorMessage: "" };
 
+
+        case ORDER_BY_NAME: 
+            let orderByName = null;
+            if (action.payload === 'A') {
+                orderByName = state.allCountries.sort((a, b) => a.name - b.name);
+            } else {
+                orderByName = state.allCountries.sort((a, b) => b.name - a.name);
+            };
+            return {
+                ...state,
+                allCountries: orderByName,
+            }; 
+
+        case ORDER_BY_POPULATION:
+            let orderByPopulation = null;
+            if (action.payload === 'A') {
+                orderByPopulation = state.allCountries.sort((a, b) => a.population - b.population);
+            } else {
+                orderByPopulation = state.allCountries.sort((a, b) => b.population - a.population);
+            };
+            return {
+                ...state,
+                allCountries: orderByPopulation,
+            };
 
         default:
             return state;
