@@ -33,48 +33,11 @@ function homePage(props) {
     }, [allCountries.length, setCurrentPage]);
 
 
-
-
-
-
-    // without pagination
-
-    // with error handler
-    // return (
-    //     <div className={style.cards}>
-    //         {error ? (
-    //             <h2>{errorMessage}</h2>
-    //         ) : allCountries.length === 0 ? (
-    //             <h2>Loading...</h2>
-    //         ) : (
-    //             allCountries.map(({ id, name, flag, continent }) => (
-    //                 <Card key={id} id={id} name={name} flag={flag} continent={continent} />
-    //             ))
-    //         )}
-    //     </div>
-
-        
-    // );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // with pagination
     // with error handler
     return (
         <>
+            
             
             <div className={style.cards}>
                 {error ? (
@@ -167,3 +130,27 @@ export default homePage;
 //         })}
 //     </div>        
 // );
+
+
+
+
+
+
+    // without pagination
+
+    // with error handler
+    // return (
+    //     <div className={style.cards}>
+    //         {error ? (
+    //             <h2>{errorMessage}</h2>
+    //         ) : allCountries.length === 0 ? (
+    //             <h2>Loading...</h2>
+    //         ) : (
+    //             allCountries.map(({ id, name, flag, continent }) => (
+    //                 <Card key={id} id={id} name={name} flag={flag} continent={continent} />
+    //             ))
+    //         )}
+    //     </div>
+
+        
+    // );

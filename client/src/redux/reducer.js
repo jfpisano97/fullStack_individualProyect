@@ -1,12 +1,20 @@
-import { GET_COUNTRIES, GET_COUNTRIES_BY_ID, ORDER_BY_NAME, ORDER_BY_POPULATION} from './actions';
+import { GET_COUNTRIES, 
+    GET_COUNTRIES_BY_ID, 
+    ORDER_BY_NAME, 
+    ORDER_BY_POPULATION, 
+    GET_COUNTRIES_BY_NAME,
+} from './actions';
 
+// states
 const initialState = {
     allCountries: [],
     countryById: [],
+    countryByName: undefined,
     error: false,
     errorMessage: "",
 };
 
+// reducer
 const rootReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_COUNTRIES:
@@ -27,6 +35,16 @@ const rootReducer = (state = initialState, action) => {
                 };
             }
         return { ...state, countryById: action.payload, error: false, errorMessage: "" };
+        case GET_COUNTRIES_BY_NAME:
+            if (action.payload.error) {
+                return {
+                    ...state,
+                    error: true,
+                    errorMessage: action.payload.errorMessage,
+                };
+            }
+        return { ...state, countryByName: action.payload, error: false, errorMessage: "" };
+
 
 
         case ORDER_BY_NAME: 
@@ -57,16 +75,6 @@ const rootReducer = (state = initialState, action) => {
             return state;
     }
 };
-
-
-// const rootReducer = (state = initialState, action) => {
-//     switch (action.type) {
-//         case GET_COUNTRIES:
-//             return {...state, allCountries: action.payload};
-//         default: return {...state};
-//     };
-// };
-
 
 export default rootReducer;
 
