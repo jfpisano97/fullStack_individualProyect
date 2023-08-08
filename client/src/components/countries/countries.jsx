@@ -3,7 +3,6 @@ import Card from '../../components/card/card.jsx';
 
 
 function countries({error, errorMessage, currentCountries}){
-    console.log(currentCountries)
     return (
         <div className={style.cards}>
             {error ? (

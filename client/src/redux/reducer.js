@@ -47,49 +47,59 @@ const rootReducer = (state = initialState, action) => {
                 };
             }
         return { ...state, countryByName: action.payload, error: false, errorMessage: "" };
-
-
-
         case ORDER_BY_NAME: 
-
-            if (state.filteredCountries){
-
-            } else {
-                
-            }
-            
-
             let orderByName = null;
-            if (action.payload === 'A') {
-                orderByName = state.allCountries.sort((a, b) => a.name.localeCompare(b.name));
+            if (!state.filteredCountries.length){
+                if (action.payload === 'A') {
+                    orderByName = state.allCountries.sort((a, b) => a.name.localeCompare(b.name));
+                } else {
+                    orderByName = state.allCountries.sort((a, b) => b.name.localeCompare(a.name));
+                };
+                return {
+                    ...state,
+                    allCountries: orderByName,
+                };
             } else {
-                orderByName = state.allCountries.sort((a, b) => b.name.localeCompare(a.name));
-            };
-            return {
-                ...state,
-                allCountries: orderByName,
-            }; 
+                if (action.payload === 'A') {
+                    orderByName = state.filteredCountries.sort((a, b) => a.name.localeCompare(b.name));
+                } else {
+                    orderByName = state.filteredCountries.sort((a, b) => b.name.localeCompare(a.name));
+                };
+                return {
+                    ...state,
+                    filteredCountries: orderByName,
+                };
+            } 
         case ORDER_BY_POPULATION:
             let orderByPopulation = null;
 
-
-
-            if (action.payload === 'D') {
-                orderByPopulation = state.allCountries.sort((a, b) => a.population - b.population);
+            if (!state.filteredCountries.length) {
+                if (action.payload === 'D') {
+                    orderByPopulation = state.allCountries.sort((a, b) => a.population - b.population);
+                } else {
+                    orderByPopulation = state.allCountries.sort((a, b) => b.population - a.population);
+                };
+                return {
+                    ...state,
+                    allCountries: orderByPopulation,
+                };
             } else {
-                orderByPopulation = state.allCountries.sort((a, b) => b.population - a.population);
-            };
-            return {
-                ...state,
-                allCountries: orderByPopulation,
-            };
+                if (action.payload === 'D') {
+                    orderByPopulation = state.filteredCountries.sort((a, b) => a.population - b.population);
+                } else {
+                    orderByPopulation = state.filteredCountries.sort((a, b) => b.population - a.population);
+                };
+                return {
+                    ...state,
+                    filteredCountries: orderByPopulation,
+                };
+            };        
         case FILTER_BY_CONTINENT:
             const totalCountries = state.allCountries;
             const filteredCountries = action.payload === 'All' ? totalCountries : totalCountries.filter(country => country.continent === action.payload);    
             return {
                 ...state,
                 filteredCountries: filteredCountries,
-                // allCountries: filteredCountries,
             }
 
         default:
