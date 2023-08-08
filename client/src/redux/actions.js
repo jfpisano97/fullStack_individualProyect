@@ -1,7 +1,11 @@
 import axios from "axios";
 
+
 export const ORDER_BY_NAME = 'ORDER_BY_NAME';
 export const ORDER_BY_POPULATION = 'ORDER_BY_POPULATION';
+
+export const FILTER_BY_CONTINENT = 'FILTER_BY_CONTINENT';
+export const FILTER_BY_ACTIVITY = 'FILTER_BY_ACTIVITY';
 
 
 export const GET_COUNTRIES = 'GET_COUNTRIES';
@@ -9,6 +13,7 @@ export const GET_COUNTRIES_BY_ID = 'GET_COUNTRIES_BY_ID';
 export const GET_COUNTRIES_BY_NAME = 'GET_COUNTRIES_BY_NAME';
 
 
+// getting countries actions
 export const getCountries = () => {
     return async (dispatch) => {
         try {
@@ -62,9 +67,7 @@ export const getCountriesByName = (name) => {
     };
 };
 
-
-
-
+// order actions
 export const orderByName = (order) => {
     return {
         type: ORDER_BY_NAME,
@@ -79,31 +82,18 @@ export const orderByPopulation = (order) => {
     };
 };
 
+// filter actions
+export const filterByContinent = (continent) => {
+    
+    return {
+        type: FILTER_BY_CONTINENT,
+        payload: continent,
+    };
+};
 
-
-
-
-
-
-///////////// PROYECTO RICY Y MORTY ////////////
-////////////////////////////////////////////////
-
-
-
-
-
-
-
-// export const filterCards = (gender) => {
-//     return {
-//         type: FILTER,
-//         payload: gender,
-//     };
-// };
-
-// export const orderCards = (order) => {
-//     return {
-//         type: ORDER,
-//         payload: order,
-//     };
-// };
+export const filterByActivity = (activity) => {
+    return {
+        type: FILTER_BY_ACTIVITY,
+        payload: activity,
+    };
+};

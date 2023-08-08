@@ -13,7 +13,7 @@ function card (props) {
                 <img src={props.flag} alt='' />
             </Link>
             <h3>{props.name}</h3> 
-            <h2>{props.continent}</h2>
+            <h5>{props.continent}</h5>
         </div>            
 
     );

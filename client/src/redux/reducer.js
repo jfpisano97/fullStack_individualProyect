@@ -1,8 +1,10 @@
 import { GET_COUNTRIES, 
     GET_COUNTRIES_BY_ID, 
+    GET_COUNTRIES_BY_NAME,
     ORDER_BY_NAME, 
     ORDER_BY_POPULATION, 
-    GET_COUNTRIES_BY_NAME,
+    FILTER_BY_CONTINENT,
+    FILTER_BY_ACTIVITY,
 } from './actions';
 
 // states
@@ -10,6 +12,7 @@ const initialState = {
     allCountries: [],
     countryById: [],
     countryByName: undefined,
+    filteredCountries: [],
     error: false,
     errorMessage: "",
 };
@@ -48,20 +51,30 @@ const rootReducer = (state = initialState, action) => {
 
 
         case ORDER_BY_NAME: 
+
+            if (state.filteredCountries){
+
+            } else {
+                
+            }
+            
+
             let orderByName = null;
             if (action.payload === 'A') {
-                orderByName = state.allCountries.sort((a, b) => a.name - b.name);
+                orderByName = state.allCountries.sort((a, b) => a.name.localeCompare(b.name));
             } else {
-                orderByName = state.allCountries.sort((a, b) => b.name - a.name);
+                orderByName = state.allCountries.sort((a, b) => b.name.localeCompare(a.name));
             };
             return {
                 ...state,
                 allCountries: orderByName,
             }; 
-
         case ORDER_BY_POPULATION:
             let orderByPopulation = null;
-            if (action.payload === 'A') {
+
+
+
+            if (action.payload === 'D') {
                 orderByPopulation = state.allCountries.sort((a, b) => a.population - b.population);
             } else {
                 orderByPopulation = state.allCountries.sort((a, b) => b.population - a.population);
@@ -70,6 +83,14 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 allCountries: orderByPopulation,
             };
+        case FILTER_BY_CONTINENT:
+            const totalCountries = state.allCountries;
+            const filteredCountries = action.payload === 'All' ? totalCountries : totalCountries.filter(country => country.continent === action.payload);    
+            return {
+                ...state,
+                filteredCountries: filteredCountries,
+                // allCountries: filteredCountries,
+            }
 
         default:
             return state;

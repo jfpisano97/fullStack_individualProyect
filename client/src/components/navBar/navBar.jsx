@@ -2,7 +2,11 @@ import Search from './search/search.jsx';
 import style from './navBar.module.css';
 import {Link} from 'react-router-dom';
 
+
+
 function navBar() {
+
+    
 
     return (
         <>
@@ -15,10 +19,6 @@ function navBar() {
                 <Link to='/form'>
                     <button className={style.btns}>Create activity</button>
                 </Link>
-
-                <button className={style.btns}>Order</button>
-
-                <button className={style.btns}>Filter</button>
 
                 <Search />
 

@@ -18,7 +18,6 @@ function search(props) {
 
     async function onSearch(event, name){
         event.preventDefault();
-        setDeleteData(false);
         if (!name) throw alert('Please type a country name');
         try {
             await dispatch(getCountriesByName(name))
@@ -46,7 +45,7 @@ function search(props) {
 
                 <div>
                     <Link to={`/countries/${countryByName[0].id}`} >
-                        <h3>{countryByName[0].name}</h3>
+                        <h2>{countryByName[0].name}</h2>
                     </Link>
                 </div>
 
