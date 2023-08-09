@@ -1,6 +1,8 @@
 import { GET_COUNTRIES, 
     GET_COUNTRIES_BY_ID, 
     GET_COUNTRIES_BY_NAME,
+    POST_ACTIVITY,
+    ADD_COUNTRY,
     ORDER_BY_NAME, 
     ORDER_BY_POPULATION, 
     FILTER_BY_CONTINENT,
@@ -12,6 +14,7 @@ const initialState = {
     allCountries: [],
     countryById: [],
     countryByName: undefined,
+    addCountry: [],
     filteredCountries: [],
     error: false,
     errorMessage: "",
@@ -47,6 +50,18 @@ const rootReducer = (state = initialState, action) => {
                 };
             }
         return { ...state, countryByName: action.payload, error: false, errorMessage: "" };
+        case POST_ACTIVITY:
+            return {...state};
+        case ADD_COUNTRY:
+            if (action.payload.error) {
+                return {
+                    ...state,
+                    error: true,
+                    errorMessage: action.payload.errorMessage,
+                };
+            }
+        return { ...state, addCountry: [...state.addCountry, action.payload], error: false, errorMessage: "" };    
+
         case ORDER_BY_NAME: 
             let orderByName = null;
             if (!state.filteredCountries.length){

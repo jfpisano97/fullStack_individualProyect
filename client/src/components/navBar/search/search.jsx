@@ -30,9 +30,9 @@ function search(props) {
 
 
 
-    console.log('input', name)
+    // console.log('input', name)
 
-    console.log('country', countryByName)
+    // console.log('country', countryByName)
 
     return (
         <>

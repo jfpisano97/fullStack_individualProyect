@@ -21,7 +21,7 @@ module.exports = (sequelize) => {
         },
     },
     duration: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         // type: DataTypes.TIME,  ---------> la consigna dice que tiene que estar en horas, quizas hay que usar esto
         allowNull: false,
     },
