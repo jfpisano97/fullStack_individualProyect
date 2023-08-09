@@ -8,38 +8,30 @@ import style from './homePage.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { getCountries, 
+    getActivities,
     orderByName, 
     orderByPopulation ,
     filterByContinent,
+    filterByActivity,
 } from '../../redux/actions.js';
 
 function homePage(props) {
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        setFilter(false);
+        dispatch(getCountries());
+        dispatch(getActivities());
+    }, []);
     
     // getting the countries
     const allCountries = useSelector(state => state.allCountries);
     const error = useSelector(state => state.error);
     const errorMessage = useSelector(state => state.errorMessage);
 
-    useEffect(() => {
-        setFilter(false);
-        dispatch(getCountries());
-    }, []);
-
-    // for pagination
-    const [currentPage, setCurrentPage] = useState(1);
-    const [countryPage, setcountryPage] = useState(10);
-    const indexLast = currentPage * countryPage;
-    const indexFirst = indexLast - countryPage;
-    const currentCountries = allCountries.slice(indexFirst, indexLast);
-    
-    const pagination = (pageNumber) => {
-        setCurrentPage(pageNumber)
-    };
-
-    useEffect(() =>{
-        setCurrentPage(1);
-    }, [allCountries.length, setCurrentPage]);
+    // getting the activities
+    const activities = useSelector(state => state.activities);
+    // console.log(activities)
 
     // order items
     const [orderNameValue, setOrderNameValue] = useState('Default');
@@ -63,11 +55,33 @@ function homePage(props) {
 
     const handleFilterByContinent = (event) => {
         event.preventDefault();
-        dispatch(filterByContinent(event.target.value))
+        dispatch(filterByContinent(event.target.value));
         if (event.target.value === 'All') setFilter(false);
         else setFilter(true);
-    };    
+    };
+    
+    const handleFilterByActivity = (event) => {
+        event.preventDefault();
+        dispatch(filterByActivity(event.target.value));
+        if (event.target.value === 'All') setFilter(false);
+        else setFilter(true);
+    };
 
+
+    // for pagination
+    const [currentPage, setCurrentPage] = useState(1);
+    const [countryPage, setcountryPage] = useState(10);
+    const indexLast = currentPage * countryPage;
+    const indexFirst = indexLast - countryPage;
+    const currentCountries = allCountries.slice(indexFirst, indexLast);
+        
+    const pagination = (pageNumber) => {
+        setCurrentPage(pageNumber)
+    };
+    
+    useEffect(() =>{
+        setCurrentPage(1);
+    }, [allCountries.length, setCurrentPage]);
 
 
     // with pagination
@@ -92,6 +106,7 @@ function homePage(props) {
                 </select>
 
                 <select onChange={handleFilterByContinent}>
+                    <option disabled value='Default'>Filter by continent</option>
                     <option value='All'>All</option>
                     <option value='Africa'>Africa</option>
                     <option value='Antarctica'>Antarctica</option>
@@ -100,6 +115,13 @@ function homePage(props) {
                     <option value='North America'>North America</option>
                     <option value='Oceania'>Oceania</option>
                     <option value='South America'>South America</option>
+                </select>
+
+                <select onChange={handleFilterByActivity}>
+                    <option disabled value='Default'>Filter by created activities</option>
+                    {activities?.map((activity) => (
+                        <option value={activity.name} key={activity.name}>{activity.name}</option>
+                    ))}
                 </select>
 
 

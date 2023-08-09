@@ -20,6 +20,20 @@ const getAllCountriesHandler = async () => {
     return success;
 };
 
+// const getAllCountriesHandler = async () => {
+//         const success = await Country.findAll({
+//             include: {
+//                 model: Activity, 
+//                 attributes: ["name"],
+//                 through: {
+//                     attributes: [],
+//                 },
+//             },
+//         });
+//         if (!success.length) throw new Error('Data Base is empty');
+//         return success;
+// };
+
 // controller
 const getCountries = async (req, res) => {
     try {

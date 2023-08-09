@@ -12,6 +12,7 @@ export const GET_COUNTRIES = 'GET_COUNTRIES';
 export const GET_COUNTRIES_BY_ID = 'GET_COUNTRIES_BY_ID';
 export const GET_COUNTRIES_BY_NAME = 'GET_COUNTRIES_BY_NAME';
 
+export const GET_ACTIVITIES = 'GET_ACTIVITIES';
 export const POST_ACTIVITY = 'POST_ACTIVITY';
 
 export const ADD_COUNTRY = 'ADD_COUNTRY';
@@ -27,6 +28,8 @@ export const getCountries = () => {
                 payload: countries.data,
             });
         } catch (error) {
+            throw new Error(error.errorMessage)
+
             dispatch({
                 type: GET_COUNTRIES,
                 payload: { error: true, errorMessage: error },
@@ -45,6 +48,8 @@ export const getCountriesById = (id) => {
                 payload: country.data,
             });
         } catch (error) {
+            throw new Error(error.errorMessage)
+
             dispatch({
                 type: GET_COUNTRIES_BY_ID,
                 payload: { error: true, errorMessage: error },
@@ -71,6 +76,21 @@ export const getCountriesByName = (name) => {
     };
 };
 
+// getting activities
+export const getActivities = () => {
+    return async (dispatch) => {
+        try {
+            const activities = await axios.get('http://localhost:3001/activities');
+            dispatch({
+                type: GET_ACTIVITIES,
+                payload: activities.data,
+            });
+        } catch (error) {
+            throw new Error(error.errorMessage)
+        };
+    };
+};
+
 // post activity
 export const postActivity = (payload) => {
     return async (dispatch) => {
@@ -85,7 +105,6 @@ export const postActivity = (payload) => {
     };
 };
 
-
 // for adding countries to the 'post activity form'
 export const addCountryList = (name) => {
     return async (dispatch) => {
@@ -97,10 +116,6 @@ export const addCountryList = (name) => {
                 payload: addCountry.data[0].id,
             })
         } catch (error) {
-            // dispatch({
-            //     type: GET_COUNTRIES_BY_NAME,
-            //     payload: { error: true, errorMessage: error },
-            // });
             throw new Error(error.errorMessage)
         };
     };

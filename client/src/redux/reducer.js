@@ -1,6 +1,7 @@
 import { GET_COUNTRIES, 
     GET_COUNTRIES_BY_ID, 
     GET_COUNTRIES_BY_NAME,
+    GET_ACTIVITIES,
     POST_ACTIVITY,
     ADD_COUNTRY,
     ORDER_BY_NAME, 
@@ -14,6 +15,7 @@ const initialState = {
     allCountries: [],
     countryById: [],
     countryByName: undefined,
+    activities: [],
     addCountry: [],
     filteredCountries: [],
     error: false,
@@ -50,6 +52,15 @@ const rootReducer = (state = initialState, action) => {
                 };
             }
         return { ...state, countryByName: action.payload, error: false, errorMessage: "" };
+        case GET_ACTIVITIES:
+            if (action.payload.error) {
+                return {
+                    ...state,
+                    error: true,
+                    errorMessage: action.payload.errorMessage,
+                };
+            }
+            return { ...state, activities: action.payload, error: false, errorMessage: "" };
         case POST_ACTIVITY:
             return {...state};
         case ADD_COUNTRY:
@@ -116,6 +127,19 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 filteredCountries: filteredCountries,
             }
+        case FILTER_BY_ACTIVITY:
+            const totalCountries2 = state.allCountries;
+            console.log("totalCountries2", totalCountries2)
+            const filteredCountries2 = totalCountries2.filter(country => {
+                return country.Activities?.some(activity => activity.name === action.payload);  
+            });
+            console.log("filteredCountries2", filteredCountries2)
+            console.log(action.payload)
+            return {
+                ...state,
+                filteredCountries: filteredCountries2,
+            }
+
 
         default:
             return state;
