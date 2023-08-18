@@ -52,10 +52,14 @@ function homePage(props) {
     // filter items
     const filteredCountries = useSelector(state => state.filteredCountries);
     const [filter, setFilter] = useState(false);
+    const [filterContinentValue, setFilteContinentrValue] = useState('Default');
+    const [filterActivitiesValue, setFilterActivitiesValue] = useState('Default');
 
     const handleFilterByContinent = (event) => {
         event.preventDefault();
         dispatch(filterByContinent(event.target.value));
+        setCurrentPage(1);
+        setFilteContinentrValue(event.target.value);
         if (event.target.value === 'All') setFilter(false);
         else setFilter(true);
     };
@@ -63,6 +67,8 @@ function homePage(props) {
     const handleFilterByActivity = (event) => {
         event.preventDefault();
         dispatch(filterByActivity(event.target.value));
+        setCurrentPage(1);
+        setFilterActivitiesValue(event.target.value);
         if (event.target.value === 'All') setFilter(false);
         else setFilter(true);
     };
@@ -70,13 +76,14 @@ function homePage(props) {
 
     // for pagination
     const [currentPage, setCurrentPage] = useState(1);
-    const [countryPage, setcountryPage] = useState(10);
+    const [countryPage, setcountryPage] = useState(12);
     const indexLast = currentPage * countryPage;
     const indexFirst = indexLast - countryPage;
     const currentCountries = allCountries.slice(indexFirst, indexLast);
+    const currentFilteredCountries = filteredCountries.slice(indexFirst, indexLast);
         
     const pagination = (pageNumber) => {
-        setCurrentPage(pageNumber)
+        setCurrentPage(pageNumber);
     };
     
     useEffect(() =>{
@@ -92,7 +99,6 @@ function homePage(props) {
 
 
             <div>
-
                 <select value={orderNameValue} onChange={handleOrderByName}>
                     <option disabled value='Default'>Order by Name</option>
                     <option value='A'>Ascendent order</option>
@@ -105,7 +111,7 @@ function homePage(props) {
                     <option value='D'>Descendent order</option>
                 </select>
 
-                <select onChange={handleFilterByContinent}>
+                <select value={filterContinentValue} onChange={handleFilterByContinent}>
                     <option disabled value='Default'>Filter by continent</option>
                     <option value='All'>All</option>
                     <option value='Africa'>Africa</option>
@@ -117,35 +123,28 @@ function homePage(props) {
                     <option value='South America'>South America</option>
                 </select>
 
-                <select onChange={handleFilterByActivity}>
+                <select value={filterActivitiesValue} onChange={handleFilterByActivity}>
                     <option disabled value='Default'>Filter by created activities</option>
+                    <option value='All'>All</option>
                     {activities?.map((activity) => (
                         <option value={activity.name} key={activity.name}>{activity.name}</option>
                     ))}
                 </select>
-
-
             </div>
 
             {filter ? (
-                <FilteredCountries error={error} errorMessage={errorMessage} filteredCountries={filteredCountries} />
+                <FilteredCountries error={error} errorMessage={errorMessage} currentFilteredCountries={currentFilteredCountries} />
             ) : (
                 <Countries error={error} errorMessage={errorMessage} currentCountries={currentCountries} />
             )}
 
-
-            {/* <Countries error={error} errorMessage={errorMessage} currentCountries={currentCountries} />      */}
-            
-
-
-
-
             <div>
                 <Pagination 
                 countryPage={countryPage} 
-                countries={allCountries.length} 
+                countries={filter ? filteredCountries.length : allCountries.length } 
                 pagination={pagination} 
-                page={currentPage} />
+                page={currentPage} 
+                currentCountries={currentCountries} />
             </div>
         </>
     );

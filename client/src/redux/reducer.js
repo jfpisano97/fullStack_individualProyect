@@ -16,6 +16,7 @@ const initialState = {
     countryById: [],
     countryByName: undefined,
     activities: [],
+    noActivities: undefined,
     addCountry: [],
     filteredCountries: [],
     error: false,
@@ -34,6 +35,7 @@ const rootReducer = (state = initialState, action) => {
                 };
             }
             return { ...state, allCountries: action.payload, error: false, errorMessage: "" };
+
         case GET_COUNTRIES_BY_ID:
             if (action.payload.error) {
                 return {
@@ -43,6 +45,7 @@ const rootReducer = (state = initialState, action) => {
                 };
             }
         return { ...state, countryById: action.payload, error: false, errorMessage: "" };
+
         case GET_COUNTRIES_BY_NAME:
             if (action.payload.error) {
                 return {
@@ -52,17 +55,21 @@ const rootReducer = (state = initialState, action) => {
                 };
             }
         return { ...state, countryByName: action.payload, error: false, errorMessage: "" };
+
         case GET_ACTIVITIES:
             if (action.payload.error) {
                 return {
                     ...state,
                     error: true,
                     errorMessage: action.payload.errorMessage,
+                    noActivities: 'There are no activities created',
                 };
             }
-            return { ...state, activities: action.payload, error: false, errorMessage: "" };
+            return { ...state, activities: action.payload, error: false, errorMessage: "", noActivities: undefined};
+
         case POST_ACTIVITY:
             return {...state};
+
         case ADD_COUNTRY:
             if (action.payload.error) {
                 return {
@@ -70,7 +77,7 @@ const rootReducer = (state = initialState, action) => {
                     error: true,
                     errorMessage: action.payload.errorMessage,
                 };
-            }
+            };
         return { ...state, addCountry: [...state.addCountry, action.payload], error: false, errorMessage: "" };    
 
         case ORDER_BY_NAME: 
@@ -95,7 +102,8 @@ const rootReducer = (state = initialState, action) => {
                     ...state,
                     filteredCountries: orderByName,
                 };
-            } 
+            };
+
         case ORDER_BY_POPULATION:
             let orderByPopulation = null;
 
@@ -120,30 +128,27 @@ const rootReducer = (state = initialState, action) => {
                     filteredCountries: orderByPopulation,
                 };
             };        
+
         case FILTER_BY_CONTINENT:
             const totalCountries = state.allCountries;
             const filteredCountries = action.payload === 'All' ? totalCountries : totalCountries.filter(country => country.continent === action.payload);    
             return {
                 ...state,
                 filteredCountries: filteredCountries,
-            }
+            };
+
         case FILTER_BY_ACTIVITY:
             const totalCountries2 = state.allCountries;
-            console.log("totalCountries2", totalCountries2)
-            const filteredCountries2 = totalCountries2.filter(country => {
-                return country.Activities?.some(activity => activity.name === action.payload);  
+            const filteredCountries2 = totalCountries2.filter((country) => {
+                return country.Activities?.find(activity => activity.name === action.payload);  
             });
-            console.log("filteredCountries2", filteredCountries2)
-            console.log(action.payload)
             return {
                 ...state,
                 filteredCountries: filteredCountries2,
-            }
-
-
+            };
         default:
-            return state;
-    }
+        return state;
+    };
 };
 
 export default rootReducer;

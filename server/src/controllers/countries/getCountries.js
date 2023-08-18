@@ -1,4 +1,4 @@
-const { Country } = require('../../db');
+const { Country, Activity } = require('../../db');
 const { Op } = require('sequelize');
 
 // handler
@@ -14,25 +14,25 @@ const getCountryByNameHandler = async (name) => {
 };
 
 // handler
-const getAllCountriesHandler = async () => {
-    const success = await Country.findAll();
-    if (!success.length) throw new Error('Data Base is empty');
-    return success;
-};
-
 // const getAllCountriesHandler = async () => {
-//         const success = await Country.findAll({
-//             include: {
-//                 model: Activity, 
-//                 attributes: ["name"],
-//                 through: {
-//                     attributes: [],
-//                 },
-//             },
-//         });
-//         if (!success.length) throw new Error('Data Base is empty');
-//         return success;
+//     const success = await Country.findAll();
+//     if (!success.length) throw new Error('Data Base is empty');
+//     return success;
 // };
+
+const getAllCountriesHandler = async () => {
+        const success = await Country.findAll({
+            include: {
+                model: Activity, 
+                attributes: ["name"],
+                through: {
+                    attributes: [],
+                },
+            },
+        });
+        if (!success.length) throw new Error('Data Base is empty');
+        return success;
+};
 
 // controller
 const getCountries = async (req, res) => {

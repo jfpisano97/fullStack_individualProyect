@@ -28,11 +28,10 @@ export const getCountries = () => {
                 payload: countries.data,
             });
         } catch (error) {
-            throw new Error(error.errorMessage)
-
+            // throw new Error(error.errorMessage)
             dispatch({
                 type: GET_COUNTRIES,
-                payload: { error: true, errorMessage: error },
+                payload: { error: true, errorMessage: error},
             });
         };
     };
@@ -48,11 +47,10 @@ export const getCountriesById = (id) => {
                 payload: country.data,
             });
         } catch (error) {
-            throw new Error(error.errorMessage)
-
+            // throw new Error(error.errorMessage)
             dispatch({
                 type: GET_COUNTRIES_BY_ID,
-                payload: { error: true, errorMessage: error },
+                payload: { error: true, errorMessage: error},
             });
         };
     };
@@ -67,11 +65,11 @@ export const getCountriesByName = (name) => {
                 payload: countryByName.data,
             })
         } catch (error) {
-            // dispatch({
-            //     type: GET_COUNTRIES_BY_NAME,
-            //     payload: { error: true, errorMessage: error },
-            // });
-            throw new Error(error.errorMessage)
+            // throw new Error(error.errorMessage)
+            dispatch({
+                type: GET_COUNTRIES_BY_NAME,
+                payload: { error: true, errorMessage: error},
+            });
         };
     };
 };
@@ -86,7 +84,11 @@ export const getActivities = () => {
                 payload: activities.data,
             });
         } catch (error) {
-            throw new Error(error.errorMessage)
+            // dispatch({
+            //     type: GET_ACTIVITIES,
+            //     payload: { error: true, errorMessage: error },
+            // });
+            throw new Error(error.errorMessage);
         };
     };
 };

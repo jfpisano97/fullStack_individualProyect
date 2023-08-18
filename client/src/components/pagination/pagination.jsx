@@ -2,11 +2,11 @@ import React from "react";
 import style from "./pagination.module.css"
 // import { useState, useEffect } from 'react';
 
-function Pagination ({countryPage, countries, pagination, page}){
+function Pagination ({countryPage, countries, pagination, page, currentCountries}){
 
   const pageNumbers = [];
 
-  for(let i = 1; i <= Math.ceil(countries/countryPage); i++){
+  for (let i = 1; i <= Math.ceil(countries/countryPage); i++){
     pageNumbers.push(i);
   };
 

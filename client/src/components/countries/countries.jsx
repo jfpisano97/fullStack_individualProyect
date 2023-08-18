@@ -1,7 +1,6 @@
 import style from './countries.module.css';
 import Card from '../../components/card/card.jsx';
 
-
 function countries({error, errorMessage, currentCountries}){
     return (
         <div className={style.cards}>
